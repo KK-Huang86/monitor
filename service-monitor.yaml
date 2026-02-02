@@ -1,0 +1,10 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: hello-web
+spec:
+  selector:
+    matchLabels:
+      app: hello-web # 對應 Service label
+  endpoints:
+    - port: metrics # 對應metrics的 port name
