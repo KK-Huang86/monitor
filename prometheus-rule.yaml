@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: nginx-alerts
+  labels:
+    release: prometheus
+spec:
+  groups:
+    - name: nginx
+      rules:
+        - alert: NginxDown
+          expr: absent(nginx_up{job="hello-web"}) == 1
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Nginx is down on {{ $labels.instance }}"
+            description: "Nginx exporter target {{ $labels.instance }} has been down for more than 1 minute."

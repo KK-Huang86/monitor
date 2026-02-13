@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: discord-alert
+  labels:
+    release: prometheus
+spec:
+  route:
+    receiver: discord
+    matchers:
+      - name: severity
+        value: warning
+  receivers:
+    - name: discord
+      webhookConfigs:
+        - url: "http://alertmanager-discord.default.svc:9094"
+          sendResolved: true
