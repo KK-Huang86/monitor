@@ -14,10 +14,12 @@ spec:
     spec:
       containers:
         - name: alertmanager-discord
-          image: benjojo/alertmanager-discord
+          image: rogerrum/alertmanager-discord:1.0.4
           env:
             - name: DISCORD_WEBHOOK
               value: "https://discord.com/api/webhooks/1471799568256729173/LgN645o7xkgrJwYh41QTzU64IapDLMSjE4iXq9pzDPWrqekI-OEMSqieEhqxF2_xLORf"
+            - name: DISCORD_USERNAME # 需要給 USERNAME 否則會報錯
+              value: "Alertmanager"
           ports:
             - containerPort: 9094
 ---
