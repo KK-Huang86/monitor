@@ -8,11 +8,42 @@ spec:
   groups:
     - name: nginx
       rules:
-        - alert: NginxDown
-          expr: absent(nginx_up{job="hello-web"}) == 1
+        # Exporter 完全消失
+        - alert: NginxExporterMissing
+          expr: absent(nginx_up{job="hello-web"}) == 1 # PromQL 如果這個 metric 完全不存在 → 回傳 1
           for: 1m
           labels:
             severity: warning
           annotations:
-            summary: "Nginx is down on {{ $labels.instance }}"
+            summary: "Nginx exporter missing"
             description: "Nginx exporter target {{ $labels.instance }} has been down for more than 1 minute."
+
+        # Exporter 存在但 nginx 掛了
+        - alert: NginxExporterDown
+          expr: nginx_up{job="hello-web"} == 0 # nginx_up == 0（服務存活但 nginx 掛）
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Nginx is down"
+            description: "Nginx is reporting up=0 for more than 1 minute."
+
+        # 活躍連線過高
+        - alert: NginxHighConnections
+          expr: nginx_connections_active{job="hello-web"} > 100
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High active connections"
+            description: "Active connections exceed 100."
+
+        #  請求量暴增
+        - alert: NginxHighRequestRate
+          expr: rate(nginx_http_requests_total{job="hello-web"}[5m]) > 1000
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High request rate"
+            description: "Request rate exceeded 1000 req/s."
