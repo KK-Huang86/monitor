@@ -36,3 +36,18 @@ spec:
   ports:
     - port: 9094
       targetPort: 9094
+
+# discord接受的文字類型與 Alertmanager 的格式不太一樣，所以需要一個 Adapter 來轉換格式
+
+# Alertmanager 送出的 JSON：
+#{
+#  "alerts": [...],
+#  "status": "firing",
+#  "groupLabels": {...}
+#}
+
+# Discord 期望的 JSON：
+#{
+# "username": "Alertmanager",
+# "content": "訊息文字"
+#}
