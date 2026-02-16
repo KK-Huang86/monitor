@@ -7,9 +7,12 @@ metadata:
 spec:
   route:
     receiver: discord
-    matchers:
+    matchers: # 配對條件
       - name: severity
         value: warning
+      - name: alertname
+        matchType: "=~"
+        value: "Nginx.*" # 只匹配 Nginx 開頭的告警`125`
   receivers:
     - name: discord
       webhookConfigs:
