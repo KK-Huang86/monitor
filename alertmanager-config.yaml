@@ -12,7 +12,7 @@ spec:
         value: warning
       - name: alertname
         matchType: "=~"
-        value: "Nginx.*" # 只匹配 Nginx 開頭的告警`125`
+        value: "Nginx.*"
   receivers:
     - name: discord
       webhookConfigs:
