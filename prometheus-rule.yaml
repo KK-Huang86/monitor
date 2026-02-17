@@ -1,5 +1,5 @@
 apiVersion: monitoring.coreos.com/v1
-kind: PrometheusRule
+kind: PrometheusRule # CRD 不會產生pod，而是被 Prometheus Operator 監控後，Prometheus Operator 會將裡面的規則加入到 Prometheus 的配置中
 metadata:
   name: nginx-alerts
   labels:
@@ -14,7 +14,7 @@ spec:
           for: 1m
           labels:
             severity: warning
-            namespace: default
+            namespace: default # 需加上namespace標籤，才能在 Alertmanager 中根據 namespace 進行路由，該
           annotations:
             summary: "Nginx exporter missing"
             description: "Nginx exporter target {{ $labels.instance }} has been down for more than 1 minute."
