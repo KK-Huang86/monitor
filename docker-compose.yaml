@@ -38,8 +38,8 @@ services:
       # OIDC 設定（指向 Keycloak）
       - GF_AUTH_GENERIC_OAUTH_ENABLED=true
       - GF_AUTH_GENERIC_OAUTH_NAME=Keycloak
-      - GF_AUTH_GENERIC_OAUTH_CLIENT_ID=grafana
-      - GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET=<YOUR_CLIENT_SECRET>
+      - GF_AUTH_GENERIC_OAUTH_CLIENT_ID=${GRAFANA_OIDC_CLIENT_ID}
+      - GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET=${GRAFANA_OIDC_SECRET}
       - GF_AUTH_GENERIC_OAUTH_SCOPES=openid profile email
       - GF_AUTH_GENERIC_OAUTH_AUTH_URL=http://localhost/realms/master/protocol/openid-connect/auth
       - GF_AUTH_GENERIC_OAUTH_TOKEN_URL=http://keycloak:8080/realms/master/protocol/openid-connect/token
