@@ -10,7 +10,7 @@
       "protocol": "openid-connect",
       "publicClient": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "Tfd5Nq9lQyPRBIuKKtbLfKdSlVackA0m",
+      "secret": "${GRAFANA_OIDC_SECRET}",
       "standardFlowEnabled": true,
       "directAccessGrantsEnabled": false,
       "redirectUris": [

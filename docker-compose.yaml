@@ -14,6 +14,7 @@ services:
       - KC_DB_PASSWORD=keycloak
       - KC_HOSTNAME_STRICT=false
       - KC_HTTP_ENABLED=true
+      - GRAFANA_OIDC_SECRET=${GRAFANA_OIDC_SECRET}
     ports:
       - "80:8080"
 
