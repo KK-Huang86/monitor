@@ -2,6 +2,31 @@
   "realm": "master",
   "enabled": true,
   "sslRequired": "none",
+  "roles": {
+    "realm": [
+      {
+        "name": "viewer",
+        "description": "Grafana Viewer"
+      }
+    ]
+  },
+  "users": [
+    {
+      "username": "viewer",
+      "enabled": true,
+      "email": "viewer@example.com",
+      "firstName": "Viewer",
+      "lastName": "User",
+      "realmRoles": ["viewer"],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "${VIEWER_PASSWORD}",
+          "temporary": false
+        }
+      ]
+    }
+  ],
   "clients": [
     {
       "clientId": "grafana",
@@ -13,17 +38,8 @@
       "secret": "${GRAFANA_OIDC_SECRET}",
       "standardFlowEnabled": true,
       "directAccessGrantsEnabled": false,
-      "redirectUris": [
-        "http://localhost:3000/login/generic_oauth"
-      ],
-      "webOrigins": [
-        "http://localhost:3000"
-      ],
-      "defaultClientScopes": [
-        "openid",
-        "profile",
-        "email"
-      ],
+      "redirectUris": ["http://localhost:3000/login/generic_oauth"],
+      "webOrigins": ["http://localhost:3000"],
       "protocolMappers": [
         {
           "name": "realm-roles",
