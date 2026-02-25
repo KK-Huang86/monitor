@@ -4,6 +4,7 @@ node_modules/
 static/styles/
 static/scripts/
 .env
+grafana-oidc-secret.yaml
 db.sqlite3
 .DS_Store
 *.pdf

@@ -2,7 +2,7 @@ services:
   keycloak:
     container_name: keycloak
     build: ./keycloak-import
-    command: start-dev --import-realm --verbose
+    command: start-dev --import-realm
     depends_on:
       - postgresql-kc
     environment:
@@ -29,31 +29,6 @@ services:
     volumes:
       - "postgresql_data:/var/lib/postgresql/data"
 
-  grafana:
-    container_name: grafana
-    image: grafana/grafana:11.5.2
-    ports:
-      - "3000:3000"
-    environment:
-      # Grafana 基本設定
-      - GF_SERVER_ROOT_URL=http://localhost:3000
-      # OIDC 設定（指向 Keycloak）
-      - GF_AUTH_GENERIC_OAUTH_ENABLED=true
-      - GF_AUTH_GENERIC_OAUTH_NAME=Keycloak
-      - GF_AUTH_GENERIC_OAUTH_CLIENT_ID=${GRAFANA_OIDC_CLIENT_ID}
-      - GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET=${GRAFANA_OIDC_SECRET}
-      - GF_AUTH_GENERIC_OAUTH_SCOPES=openid profile email
-      - GF_AUTH_GENERIC_OAUTH_AUTH_URL=http://localhost/realms/master/protocol/openid-connect/auth
-      - GF_AUTH_GENERIC_OAUTH_TOKEN_URL=http://keycloak:8080/realms/master/protocol/openid-connect/token
-      - GF_AUTH_GENERIC_OAUTH_API_URL=http://keycloak:8080/realms/master/protocol/openid-connect/userinfo
-      - GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH=contains(realm_access.roles[*], 'admin') && 'Admin' || 'Viewer'
-    volumes:
-      - "grafana_data:/var/lib/grafana"
-    depends_on:
-      - keycloak
-
 volumes:
   postgresql_data:
-    driver: local
-  grafana_data:
     driver: local
