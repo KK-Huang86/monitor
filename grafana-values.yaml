@@ -7,11 +7,11 @@ grafana:
       name: Keycloak
       client_id: grafana
       scopes: openid profile email
-      # AUTH_URL：瀏覽器發起，用 localhost（宿主機 port 80）
+      # AUTH_URL：瀏覽器發起，用 localhost（宿主機 port 80 登入keycloak ）
       auth_url: http://localhost/realms/master/protocol/openid-connect/auth
       # TOKEN_URL / API_URL：Pod 內部發起，用 host.minikube.internal 穿透到宿主機
-      token_url: http://host.minikube.internal/realms/master/protocol/openid-connect/token
-      api_url: http://host.minikube.internal/realms/master/protocol/openid-connect/userinfo
+      token_url: http://host.minikube.internal/realms/master/protocol/openid-connect/token # 換 JWT token
+      api_url: http://host.minikube.internal/realms/master/protocol/openid-connect/userinfo # 查使用者資訊 哪個 role 以及有什麼權限
       role_attribute_path: "contains(realm_access.roles[*], 'admin') && 'Admin' || 'Viewer'"
 
   # 從 K8s Secret 載入 env var（key 名稱直接對應 Grafana env var）
