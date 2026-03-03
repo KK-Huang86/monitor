@@ -6,6 +6,48 @@
 
 ---
 
+## 快速開始
+
+**1. 啟動 Keycloak**
+
+複製 `.env.example` 為 `.env` 並填入實際值，再啟動 Keycloak：
+
+```bash
+cp .env.example .env
+cd keycloak && docker compose up -d
+```
+
+**2. 建立 K8s Secrets**
+
+```bash
+# Discord webhook URL
+kubectl create secret generic discord-webhook \
+  --from-literal=url=<your-discord-webhook-url>
+
+# Grafana OIDC 憑證（對應 Keycloak 中建立的 client secret）
+kubectl create secret generic grafana-oidc-secret \
+  --from-literal=GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET=<client-secret>
+```
+
+**3. 安裝 kube-prometheus-stack**
+
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm install prometheus prometheus-community/kube-prometheus-stack \
+  -f grafana/grafana-values.yaml
+```
+
+**4. 套用其餘 K8s 資源**
+
+```bash
+kubectl apply -f nginx/
+kubectl apply -f prometheus/
+kubectl apply -f alertmanager/
+kubectl apply -f grafana/grafana-dashboard-configmap.yaml
+```
+
+---
+
 ## 架構概覽
 
 架設於 Kubernetes，相依套件透過 Helm 安裝
