@@ -2,7 +2,7 @@
 
 一套架設於 Kubernetes 上的監控系統，涵蓋指標收集、告警、視覺化與身份驗證，所有配置皆以程式碼管理（IaC）。
 
-使用的技術：Kubernetes、Prometheus、grafana、Keycloak
+使用的技術：Kubernetes、Prometheus、Grafana、Keycloak
 
 ---
 
