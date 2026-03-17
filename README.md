@@ -127,6 +127,8 @@ Grafana SSO 的身份提供者。`docker-compose.yaml` 啟動一個以 PostgreSQ
 
 2. 目前 service 的 type 為 ClusterIP，使得只能在本機操作，外面打不進來。將規劃使用ClusterIP + Ingress，使得外部流向可以進入
 
+---
+
 ## 成果截圖
 
 ![Discord 告警通知](static/imgs/screenshot_for_discord.png)
